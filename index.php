@@ -66,16 +66,16 @@ require_once "config.php";
         <?php
         // Récupérer et afficher les membres de la commune
         
-        foreach ($resultats as $membres) {
+        foreach ($resultats as $membre) {
             echo "<tr>";
-            echo "<td>" . $membres['matricule'] . "</td>";
-            echo "<td>" . $membres['nom'] . "</td>";
-            echo "<td>" . $membres['prenom'] . "</td>";
-            echo "<td>" . $membres['tranche_age'] . "</td>";
-            echo "<td>" . $membres['sexe'] . "</td>";
-            echo "<td>" . $membres['situation_matrimoniale'] . "</td>";
-            echo "<td>" . $membres['statut'] . "</td>";
-            echo "<td><a href='update.php?id=" . $membres['id'] . "'>Modifier</a> | <a href='delete.php?id=" . $membres['id'] . "'>Supprimer</a></td>";
+            echo "<td>" . $membre['matricule'] . "</td>";
+            echo "<td>" . $membre['nom'] . "</td>";
+            echo "<td>" . $membre['prenom'] . "</td>";
+            echo "<td>" . $membre['tranche_age'] . "</td>";
+            echo "<td>" . $membre['sexe'] . "</td>";
+            echo "<td>" . $membre['situation_matrimoniale'] . "</td>";
+            echo "<td>" . $membre['statut'] . "</td>";
+            echo "<td><a href='update.php?id=" . $membre['id'] . "'>Modifier</a> | <a href='delete.php?id=" . $membre['id'] . "'>Supprimer</a></td>";
             echo "</tr>";
         }
         ?>
