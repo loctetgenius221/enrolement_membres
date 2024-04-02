@@ -12,7 +12,7 @@ try{
     $connexion = new PDO("mysql:host=".DB_SERVEUR.";dbname=".DB_NAME,DB_USERNAME,DB_PASSWORD);
     $membre = new Membres($connexion, 99, "Sarr","Fatou", 25, "Féminin", "Marié", "Civile");
     //Appel de la méthode d'affichage
-    $resultats= $student->readStudent();
+    $resultats= $membre->readMembres();
 
 }
 catch(PDOException $e){
