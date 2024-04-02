@@ -1,8 +1,8 @@
 <?php
-require_once "CRUD.php";
+require_once "crud.php";
 
 //création de la class Student
-class Membres implements CRUD
+class Membres implements crud
 {
     //Proprietés privées
     private $connexion;
@@ -93,28 +93,28 @@ class Membres implements CRUD
     {
         $this->statut=$nouveauStatut;
     }
-    
+
 
     //Methode pour ajouter des élèves
-    public function addMember($matricule,$nom,$prenom,$tranche_age,$sexe,$situation_matrimoniale,$statut)
+    public function addMembres($matricule,$nom,$prenom,$tranche_age,$sexe,$situation_matrimoniale,$statut)
     {
        
     }
 
     //Methode pour afficher les élèves
-    public function readMember()
+    public function readMembres()
     {
        
     }
 
     //Methode pour modifier les élèves
-    public function updateMember($id,$matricule,$nom,$prenom,$tranche_age,$sexe,$situation_matrimoniale,$statut)
+    public function updateMembres($id,$matricule,$nom,$prenom,$tranche_age,$sexe,$situation_matrimoniale,$statut)
     {
         
     }
 
     //methode pour supprimer les élèves
-    public function deleteMember($id)
+    public function deleteMembres($id)
     {
    
     }
