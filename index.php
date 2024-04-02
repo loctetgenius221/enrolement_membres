@@ -29,14 +29,24 @@ require_once "config.php";
         <input type="text" name="tranche_age" id="tranche_age" required><br>
         
         <label for="sexe">Sexe :</label>
-        <input type="text" name="sexe" id="sexe" required><br>
-        
+        <select name="sexe" id="sexe" required>
+            <option value="Masculin">Masculin</option>
+            <option value="Féminin">Féminin</option>
+        </select><br>        
         <label for="situation_matrimoniale">Situation matrimoniale :</label>
-        <input type="text" name="situation_matrimoniale" id="situation_matrimoniale" required><br>
-        
+        <select name="situation_matrimoniale" id="situation_matrimoniale" required>
+            <option value="Célibataire">Célibataire</option>
+            <option value="Marié(e)">Marié(e)</option>
+            <option value="Divorcé">Divorcé</option>
+            <option value="Veuf(ve)">Veuf(ve)</option>
+        </select><br>        
         <label for="statut">Statut :</label>
-        <input type="text" name="statut" id="statut" required><br>
-        
+        <select name="statut" id="statut" required>
+            <option value="Chef de quartier">Chef de quartier</option>
+            <option value="Civile">Civile</option>
+            <option value="Badianou Ngokh">Badianou Ngokh</option>
+            <!-- Ajoutez d'autres options si nécessaire -->
+        </select><br>        
         <input type="submit" name="submit" value="Ajouter le membre">
     </form>
     
