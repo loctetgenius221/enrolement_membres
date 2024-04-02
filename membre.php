@@ -104,7 +104,23 @@ class Membres implements crud
     //Methode pour afficher les élèves
     public function readMembres()
     {
-       
+        try {
+            //requete sql pour selectionner tout les élèves
+            $sql="SELECT * FROM membres";
+
+            //preparation de la requete
+            $stmt=$this->connexion->prepare($sql);
+
+            //exécution de la requete
+            $stmt->execute();
+
+            //recuperation des resultats
+            $resultats=$stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $resultats;
+        } 
+        catch (PDOException $e) {
+            die("erreur:Impossible d'afficher les élèves" .$e->getMessage());
+        }
     }
 
     //Methode pour modifier les élèves
