@@ -17,7 +17,7 @@ require_once "config.php";
     <h2>Ajouter un nouveau membre</h2>
     <form action="adddata.php" method="post">
         <label for="matricule">Matricule :</label>
-        <input type="text" name="matricule" id="matricule" required><br>
+        <input type="number" name="matricule" id="matricule" required><br>
         
         <label for="nom">Nom :</label>
         <input type="text" name="nom" id="nom" required><br>
@@ -26,7 +26,7 @@ require_once "config.php";
         <input type="text" name="prenom" id="prenom" required><br>
         
         <label for="tranche_age">Tranche d'âge :</label>
-        <input type="text" name="tranche_age" id="tranche_age" required><br>
+        <input type="number" name="tranche_age" id="tranche_age" required><br>
         
         <label for="sexe">Sexe :</label>
         <select name="sexe" id="sexe" required>
