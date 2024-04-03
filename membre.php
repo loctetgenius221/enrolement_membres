@@ -192,8 +192,15 @@ class Membres implements CRUD
     //methode pour supprimer les élèves
     public function deleteMembres($id)
     {
-   
+        // Préparez votre requête de suppression
+        $query = "DELETE FROM table WHERE id = :id";
+        
+        // Exécutez la requête avec un paramètre lié
+        $stmt = $this->connexion->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
     }
+   
 
     
 }
