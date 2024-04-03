@@ -2,7 +2,7 @@
 require_once "crud.php";
 
 //création de la class Student
-class Membres implements crud
+class Membres implements CRUD
 {
     //Proprietés privées
     private $connexion;
