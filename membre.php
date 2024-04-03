@@ -130,7 +130,7 @@ class Membres implements CRUD
         }
     }
 
-    //Methode pour afficher les élèves
+    //Methode pour afficher les membres
     public function readMembres()
     {
         try {
