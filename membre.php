@@ -1,7 +1,7 @@
 <?php
 require_once "crud.php";
 
-//création de la class Student
+//création de la class Membres
 class Membres implements CRUD
 {
     //Proprietés privées
@@ -152,7 +152,7 @@ class Membres implements CRUD
         }
     }
 
-    //Methode pour modifier les élèves
+    //Methode pour modifier les membres
     public function updateMembres($id,$matricule,$nom,$prenom,$tranche_age,$sexe,$situation_matrimoniale,$statut)
     {
         try{
@@ -189,18 +189,27 @@ class Membres implements CRUD
         }
     }
 
-    //methode pour supprimer les élèves
+    //methode pour supprimer les membres
     public function deleteMembres($id)
     {
-        // Préparez votre requête de suppression
-        $query = "DELETE FROM table WHERE id = :id";
-        
-        // Exécutez la requête avec un paramètre lié
-        $stmt = $this->connexion->prepare($query);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-    }
-   
+        try{
+            // Préparez votre requête de suppression
+            $sql = "DELETE  FROM membres WHERE id = :id";
 
-    
+            //Préparer la requête
+            $stmt = $this->connexion->prepare($sql);
+
+            //Faire la liaison des valeurs aux paramètres
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+            // Exécutez la requête
+            $stmt->execute();
+
+            //rediriger la page 
+            header("location: index.php");
+            exit();
+        } catch (PDOException $e){
+            die("Identifiant invalide" .$e->getMessage());
+        }
+    }
 }
