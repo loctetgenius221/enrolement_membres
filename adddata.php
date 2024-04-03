@@ -15,7 +15,7 @@ if(isset($_POST['submit'])){
     //verifier si les champs ne sont pas vide 
     if($matricule !="" && $nom !="" && $prenom !="" && $tranche_age !="" && $sexe !="" && $situation_matrimoniale !="" && $statut !=""){
         //appel de la methode 
-        $membre->addMembres($matricule, $nom, $prenom, $tranche_age, $sexe, $situation_matrimoniale, $statut);
+        $resultats->addMembres($matricule, $nom, $prenom, $tranche_age, $sexe, $situation_matrimoniale, $statut);
     }
 }
 ?>

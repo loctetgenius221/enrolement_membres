@@ -95,10 +95,39 @@ class Membres implements crud
     }
 
 
-    //Methode pour ajouter des élèves
+    //Methode pour ajouter des membres
     public function addMembres($matricule,$nom,$prenom,$tranche_age,$sexe,$situation_matrimoniale,$statut)
     {
-       
+        
+        try {
+            //requete pour inserer
+            $sql= "INSERT INTO membres (matricule,nom,prenom,tranche_age,sexe,situation_matrimoniale,statut) VALUES(:matricule,:nom,:prenom,:tranche_age,:sexe,:situation_matrimoniale,:statut)";
+    
+               
+            //preparation de la requete
+            $stmt=$this->connexion->prepare($sql);
+    
+            //faire la liaison des valeurs aux paramètres
+            $stmt->bindParam(':matricule',$matricule, PDO::PARAM_INT);
+            $stmt->bindParam(':nom',$nom, PDO::PARAM_STR);
+            $stmt->bindParam(':prenom',$prenom, PDO::PARAM_STR);
+            $stmt->bindParam(':tranche_age',$tranche_age, PDO::PARAM_INT);
+            $stmt->bindParam(':sexe',$sexe, PDO::PARAM_STR);
+            $stmt->bindParam(':situation_matrimoniale',$situation_matrimoniale, PDO::PARAM_STR);
+            $stmt->bindParam(':statut',$statut, PDO::PARAM_STR);
+    
+            //execute la requete
+    
+            $stmt->execute();
+    
+            //rediriger la page 
+            header("location: index.php");
+            exit();
+    
+    
+        } catch (PDOException $e) {
+            die("erreur: impossible d'inserer des données" .$e->getMessage());
+        }
     }
 
     //Methode pour afficher les élèves
@@ -119,7 +148,7 @@ class Membres implements crud
             return $resultats;
         } 
         catch (PDOException $e) {
-            die("erreur:Impossible d'afficher les élèves" .$e->getMessage());
+            die("erreur:Impossible d'afficher les membres" .$e->getMessage());
         }
     }
 

@@ -15,7 +15,7 @@ require_once "config.php";
     
     <!-- Formulaire d'ajout de membre -->
     <h2>Ajouter un nouveau membre</h2>
-    <form action="adddata.php" method="post">
+    <form action="adddata.php" method="POST">
         <label for="matricule">Matricule :</label>
         <input type="number" name="matricule" id="matricule" required><br>
         
