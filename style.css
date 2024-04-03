@@ -1,0 +1,144 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #E5E5E5;
+}
+
+.ajout {
+    width: 100%;
+    height: 100vh;
+    background: #FEAF00;
+    padding: 50px;
+}
+
+.ajout h1 {
+    text-align: center;
+    color: white;
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.ajout h2 {
+    text-align: center;
+}
+
+.ajout form {
+    width: 60%;
+    margin: 0 auto;
+    background-color: white;
+    padding: 50px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.ajout form label {
+    font-size: 20px;
+}
+
+.ajout form input {
+    width: 100%;
+    height: 45px;
+    padding: 5px 15px;
+    font-size: 18px;
+    background: #E5E5E5;
+    border: none;
+    margin: 5px 0px 10px 0;
+    border-radius: 3px;
+    outline: none;
+}
+
+.ajout form select {
+    width: 100%;
+    height: 45px;
+    padding: 5px 10px;
+    font-size: 18px;
+    border: none;
+    margin: 2px 0px;
+}
+
+.ajout form input[type="submit"] {
+    width: 250px;
+    background: #FEAF00;
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+}
+
+.ajout form .les-options {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.ajout form .les-options .options {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.liste {
+    width: 80%;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding: 50px;
+}
+
+.liste h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.liste table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    border-spacing: 10px;
+}
+
+.liste table tr {
+    background: white;
+}
+
+.liste table th {
+    border-bottom: 1px solid black;
+}
+
+.liste table th,
+.liste table td
+    {
+    font-size: 20px;
+    padding: 20px;
+}
+
+
+.liste table td .btnmodifier{
+    background: lightgreen;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+.liste table td .btnsupprimer{
+    background: rgb(226, 29, 29);
+    padding: 7px;
+    border-radius: 5px;
+}
+
+.liste table td a,
+.liste table td a {
+    text-decoration: none;
+    color: white;
+}
