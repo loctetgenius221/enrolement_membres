@@ -155,7 +155,38 @@ class Membres implements CRUD
     //Methode pour modifier les élèves
     public function updateMembres($id,$matricule,$nom,$prenom,$tranche_age,$sexe,$situation_matrimoniale,$statut)
     {
-        
+        try{
+
+            //J'écris la requete qui va me permettre de modifier un membre
+            $sql = "UPDATE membres SET matricule=:matricule, nom=:nom, prenom=:prenom, tranche_age=:tranche_age, sexe=:sexe, situation_matrimoniale=:situation_matrimoniale, statut=:statut WHERE id=:id";
+
+            //Je prépare la requete
+            $stmt=$this->connexion->prepare($sql);
+
+            //Je lis les valeurs aux paramètres
+            $stmt->bindParam(':matricule',$matricule);
+            $stmt->bindParam(':nom',$nom);
+            $stmt->bindParam(':prenom',$prenom);
+            $stmt->bindParam(':tranche_age',$tranche_age);
+            $stmt->bindParam(':sexe',$sexe);
+            $stmt->bindParam(':situation_matrimoniale',$situation_matrimoniale);
+            $stmt->bindParam(':statut',$statut);
+            $stmt->bindParam(':id',$id);
+
+
+            //J'execute la requete
+            $stmt->execute();
+
+            //Si la modification passe
+            return true;
+
+            //Je fait une redirection vers la page index
+            header('location: index.php');
+            exit;
+
+        } catch(PDOException $e) {
+            die("Erreur : Impossible de modifier le membre" .$e->getMessage());
+        }
     }
 
     //methode pour supprimer les élèves
