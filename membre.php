@@ -153,18 +153,17 @@ class Membres implements CRUD
     }
 
     //Methode pour modifier les membres
-    public function updateMembres($id,$matricule,$nom,$prenom,$tranche_age,$sexe,$situation_matrimoniale,$statut)
+    public function updateMembres($id,$nom,$prenom,$tranche_age,$sexe,$situation_matrimoniale,$statut)
     {
         try{
 
             //J'écris la requete qui va me permettre de modifier un membre
-            $sql = "UPDATE membres SET matricule=:matricule, nom=:nom, prenom=:prenom, tranche_age=:tranche_age, sexe=:sexe, situation_matrimoniale=:situation_matrimoniale, statut=:statut WHERE id=:id";
+            $sql = "UPDATE membres SET nom=:nom, prenom=:prenom, tranche_age=:tranche_age, sexe=:sexe, situation_matrimoniale=:situation_matrimoniale, statut=:statut WHERE id=:id";
 
             //Je prépare la requete
             $stmt=$this->connexion->prepare($sql);
 
             //Je lis les valeurs aux paramètres
-            $stmt->bindParam(':matricule',$matricule);
             $stmt->bindParam(':nom',$nom);
             $stmt->bindParam(':prenom',$prenom);
             $stmt->bindParam(':tranche_age',$tranche_age);

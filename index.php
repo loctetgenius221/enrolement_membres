@@ -13,7 +13,11 @@ require_once "config.php";
 </head>
 <body>
     <section class="ajout">
-        <h1>Gestion des membres de la commune de Patte d'Oie</h1>
+        <div class="entete">
+            <img src="images/pattedoie.jpg" width="80px" height="80px">
+            <h1>Gestion des membres de la commune de Patte d'Oie</h1>
+            <img src="images/pattedoie.jpg" width="80px" height="80px">
+        </div>
         
         <!-- Formulaire d'ajout de membre -->
         <h2>Ajouter un nouveau membre</h2>
