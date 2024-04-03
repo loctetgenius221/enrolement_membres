@@ -101,7 +101,7 @@ class Membres implements CRUD
         
         try {
             //requete pour inserer
-            $sql= "INSERT INTO membres (matricule,nom,prenom,tranche_age,sexe,situation_matrimoniale,statut) VALUES(:matricule,:nom,:prenom,:tranche_age,:sexe,:situation_matrimoniale,:statut)";
+            $sql= "INSERT INTO membres(matricule,nom,prenom,tranche_age,sexe,situation_matrimoniale,statut) VALUES(:matricule,:nom,:prenom,:tranche_age,:sexe,:situation_matrimoniale,:statut)";
     
                
             //preparation de la requete
