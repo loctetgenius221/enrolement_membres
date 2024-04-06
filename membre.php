@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once "crud.php";
 
 //création de la class Membres
@@ -9,23 +12,23 @@ class Membres implements CRUD
     private $matricule;
     private $nom;
     private $prenom;
-    private $tranche_age;
     private $sexe;
     private $situation_matrimoniale;
-    private $statut;
+    private $id_tranche_age;
+    private $id_statut;
 
 
     //creation de la methode construct
-    public function __construct($connexion,$matricule,$nom,$prenom,$tranche_age,$sexe,$situation_matrimoniale,$statut)
+    public function __construct($connexion,$matricule,$nom,$prenom,$sexe,$situation_matrimoniale,$id_tranche_age,$id_statut)
     {
         $this->connexion=$connexion;
         $this->matricule=$matricule;
         $this->nom=$nom;
         $this->prenom=$prenom;
-        $this->tranche_age=$tranche_age;
         $this->sexe=$sexe;
         $this->situation_matrimoniale=$situation_matrimoniale;
-        $this->statut=$statut;
+        $this->id_tranche_age=$id_tranche_age;
+        $this->id_statut=$id_statut;
 
     }
 
@@ -58,15 +61,6 @@ class Membres implements CRUD
         $this->prenom=$nouveauPrenom;
     }
 
-    public function  getTranche_age()
-    {
-        return $this->tranche_age;
-    }
-    public function setTranche_age($nouveauTranche_age)
-    {
-        $this->tranche_age=$nouveauTranche_age;
-    }
-
     public function  getSexe()
     {
         return $this->sexe;
@@ -84,37 +78,58 @@ class Membres implements CRUD
     {
         $this->situation_matrimoniale=$nouveauSituation_matrimoniale;
     }
+    public function  getTranche_age()
+    {
+        return $this->id_tranche_age;
+    }
+    public function setTranche_age($nouveauTranche_age)
+    {
+        $this->id_tranche_age=$nouveauTranche_age;
+    }
+
 
     public function  getStatut()
     {
-        return $this->statut;
+        return $this->id_statut;
     }
     public function setStatut($nouveauStatut)
     {
-        $this->statut=$nouveauStatut;
+        $this->id_statut=$nouveauStatut;
     }
 
-
     //Methode pour ajouter des membres
-    public function addMembres($matricule,$nom,$prenom,$tranche_age,$sexe,$situation_matrimoniale,$statut)
+    public function addMembres($nom,$prenom,$sexe,$situation_matrimoniale,$id_tranche_age,$id_statut)
     {
         
         try {
+            // Procédure pour générer de façon automatique les matricule et commençant par PO
+
+            // Récupérer le dernier identifiant inséré dans la table membres
+            $sql = "SELECT MAX(id) AS last_id FROM membres";
+            $result = $this->connexion->query($sql);
+            $row = $result->fetch(PDO::FETCH_ASSOC);
+            $last_id = $row['last_id'];
+    
+            // Incrémenter l'identifiant pour obtenir le prochain numéro de matricule
+            $next_id = $last_id + 1;
+    
+            // Formater le numéro de matricule
+            $matricule = 'PO_' . str_pad($next_id, 3, '0', STR_PAD_LEFT);
             //requete pour inserer
-            $sql= "INSERT INTO membres(matricule,nom,prenom,tranche_age,sexe,situation_matrimoniale,statut) VALUES(:matricule,:nom,:prenom,:tranche_age,:sexe,:situation_matrimoniale,:statut)";
+            $sql= "INSERT INTO membres(matricule,nom,prenom,sexe,situation_matrimoniale,id_tranche_age,id_statut) VALUES(:matricule,:nom,:prenom,:sexe,:situation_matrimoniale,:tranche_age,:statut)";
     
                
             //preparation de la requete
             $stmt=$this->connexion->prepare($sql);
     
             //faire la liaison des valeurs aux paramètres
-            $stmt->bindParam(':matricule',$matricule, PDO::PARAM_INT);
+            $stmt->bindParam(':matricule',$matricule, PDO::PARAM_STR);
             $stmt->bindParam(':nom',$nom, PDO::PARAM_STR);
             $stmt->bindParam(':prenom',$prenom, PDO::PARAM_STR);
-            $stmt->bindParam(':tranche_age',$tranche_age, PDO::PARAM_INT);
             $stmt->bindParam(':sexe',$sexe, PDO::PARAM_STR);
             $stmt->bindParam(':situation_matrimoniale',$situation_matrimoniale, PDO::PARAM_STR);
-            $stmt->bindParam(':statut',$statut, PDO::PARAM_STR);
+            $stmt->bindParam(':tranche_age',$id_tranche_age, PDO::PARAM_INT);
+            $stmt->bindParam(':statut',$id_statut, PDO::PARAM_INT);
     
             //execute la requete
     
@@ -134,8 +149,10 @@ class Membres implements CRUD
     public function readMembres()
     {
         try {
-            //requete sql pour selectionner tout les élèves
-            $sql="SELECT * FROM membres";
+            //requete sql pour selectionner tout les membres
+            $sql="SELECT  m.*, t.libelle_tranche_age, s.libelle_statut FROM membres m 
+            LEFT JOIN tranche_age t ON m.id_tranche_age = t.id 
+            LEFT JOIN statut s ON m.id_statut = s.id";
 
             //preparation de la requete
             $stmt=$this->connexion->prepare($sql);
@@ -153,23 +170,23 @@ class Membres implements CRUD
     }
 
     //Methode pour modifier les membres
-    public function updateMembres($id,$nom,$prenom,$tranche_age,$sexe,$situation_matrimoniale,$statut)
+    public function updateMembres($id,$nom,$prenom,$sexe,$situation_matrimoniale,$id_tranche_age,$id_statut)
     {
         try{
 
             //J'écris la requete qui va me permettre de modifier un membre
-            $sql = "UPDATE membres SET nom=:nom, prenom=:prenom, tranche_age=:tranche_age, sexe=:sexe, situation_matrimoniale=:situation_matrimoniale, statut=:statut WHERE id=:id";
+            $sql = "UPDATE membres SET nom=:nom, prenom=:prenom, id_tranche_age=:tranche_age, sexe=:sexe, situation_matrimoniale=:situation_matrimoniale, id_statut=:statut WHERE id=:id";
 
-            //Je prépare la requete
+            //Préparation de la requete
             $stmt=$this->connexion->prepare($sql);
 
-            //Je lis les valeurs aux paramètres
+            //Liaison des valeurs aux paramètres
             $stmt->bindParam(':nom',$nom);
             $stmt->bindParam(':prenom',$prenom);
-            $stmt->bindParam(':tranche_age',$tranche_age);
             $stmt->bindParam(':sexe',$sexe);
             $stmt->bindParam(':situation_matrimoniale',$situation_matrimoniale);
-            $stmt->bindParam(':statut',$statut);
+            $stmt->bindParam(':tranche_age',$id_tranche_age);
+            $stmt->bindParam(':statut',$id_statut);
             $stmt->bindParam(':id',$id);
 
 
@@ -184,7 +201,7 @@ class Membres implements CRUD
             exit;
 
         } catch(PDOException $e) {
-            die("Erreur : Impossible de modifier le membre" .$e->getMessage());
+            die("Erreur : Impossible de modifier les informations du membre" .$e->getMessage());
         }
     }
 
