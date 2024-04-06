@@ -1,6 +1,8 @@
 <?php
-// Inclure le fichier contenant la classe Member
+// Inclure le fichier config
 require_once "config.php";
+//Inclure le fichier d'ajout pour insérer les Script qui permettent de récupérer les données des tables tranche_age et statut.
+require_once "adddata.php";
 ?>
 
 <!DOCTYPE html>
@@ -22,18 +24,12 @@ require_once "config.php";
         <!-- Formulaire d'ajout de membre -->
         <h2>Ajouter un nouveau membre</h2>
         <form action="adddata.php" method="POST">
-            <label for="matricule">Matricule :</label> <br>
-            <input type="number" name="matricule" id="matricule" required><br>
-            
+
             <label for="nom">Nom :</label><br>
             <input type="text" name="nom" id="nom" required><br>
             
             <label for="prenom">Prénom :</label><br>
             <input type="text" name="prenom" id="prenom" required><br>
-            
-            <label for="tranche_age">Tranche d'âge :</label><br>
-            <input type="number" name="tranche_age" id="tranche_age" required><br>
-            <div class="les-options">
 
                 <div class="options">
                     <label for="sexe">Sexe :</label><br>
@@ -50,17 +46,29 @@ require_once "config.php";
                         <option value="Divorcé">Divorcé</option>
                         <option value="Veuf(ve)">Veuf(ve)</option>
                     </select><br>
-                    </div>        
-                <div class="options">
+                </div> 
+                <label for="tranche_age">Tranche d'âge :</label><br>
+                    <select name="tranche_age" id="tranche_age" required>
+                        <option value="">Sélectionnez la tranche d'âge</option>
+                    <!-- On utilisez PHP pour générer les options à partir des données de la table tranche_age -->
+                    <?php
+        
+                        foreach ($liste_tranche_age as $tranche_age) {
+                        echo "<option value=\"{$tranche_age['id']}\">{$tranche_age['libelle_tranche_age']}</option>";
+                        }
+                    ?>
+                    </select><br>
                 <label for="statut">Statut :</label><br>
                     <select name="statut" id="statut" required>
-                        <option value="Chef de quartier">Chef de quartier</option>
-                        <option value="Civile">Civile</option>
-                        <option value="Badianou Ngokh">Badianou Ngokh</option>
-                        <!-- Ajoutez d'autres options si nécessaire -->
-                    </select><br>
-                </div>        
-            </div>
+                        <option value="">Sélectionnez le statut</option>
+                        <!-- On utilise PHP pour générer les options à partir des données de la table statut -->
+                    <?php
+                        foreach ($liste_statut as $statut) {
+                        echo "<option value=\"{$statut['id']}\">{$statut['libelle_statut']}</option>";
+                        }
+                    ?>
+                    </select><br>       
+                    
             <input type="submit" name="submit" value="Ajouter le membre">
 
         </form>
@@ -89,10 +97,10 @@ require_once "config.php";
                 echo "<td>" . $membre['matricule'] . "</td>";
                 echo "<td>" . $membre['nom'] . "</td>";
                 echo "<td>" . $membre['prenom'] . "</td>";
-                echo "<td>" . $membre['tranche_age'] . "</td>";
+                echo "<td>" . $membre['libelle_tranche_age'] . "</td>";
                 echo "<td>" . $membre['sexe'] . "</td>";
                 echo "<td>" . $membre['situation_matrimoniale'] . "</td>";
-                echo "<td>" . $membre['statut'] . "</td>";
+                echo "<td>" . $membre['libelle_statut'] . "</td>";
                 echo "<td><span class='btnmodifier'><a href='update.php?id=" . $membre['id'] . "' >Modifier</a></span> | <span class='btnsupprimer'><a href='delete.php?id=" . $membre['id'] . "'>Supprimer</a></span></td>";
                 echo "</tr>";
             }
