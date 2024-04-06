@@ -10,16 +10,19 @@ if(isset($_POST['submit'])) {
 
     //On recupère les valeurs dans des variables
     $id = $_GET['id'];
+
     // $matricule = $_POST['matricule'];
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
-    $tranche_age = $_POST['tranche_age'];
     $sexe = $_POST['sexe'];
     $situation_matrimoniale = $_POST['situation_matrimoniale'];
-    $statut = $_POST['statut'];
+
+    // Récupérer les valeurs sélectionnées du statut et de la tranche d'âge
+    $id_statut = $_POST['statut'];
+    $id_tranche_age = $_POST['tranche_age'];
 
     //Appel à la fonction updateMembre
-    $membre->updateMembres($id,$nom,$prenom,$tranche_age,$sexe,$situation_matrimoniale,$statut);
+    $membre->updateMembres($id,$nom,$prenom,$sexe,$situation_matrimoniale,$id_tranche_age,$id_statut);
 
     //On fait une redirection vers index.php
     header('location: index.php');
@@ -42,10 +45,10 @@ if(isset($_POST['submit'])) {
     <section class="ajout">
         <h1>Gestion des membres de la commune de Patte d'Oie</h1>
         
-        <!-- Formulaire d'ajout de membre -->
+        <!-- Formulaire pour modifier les information d'un membre -->
         <h2>Modifier un membre</h2>
                 <?php
-                    //requete sql pour selectionner les données de l'etudiant à partir de son id 
+                    //requete sql pour selectionner les données d'un membre à partir de son id 
 
                     $sql = "SELECT * FROM membres WHERE id = :id";
 
@@ -60,15 +63,14 @@ if(isset($_POST['submit'])) {
                     if($stmt->execute()){
                         //preparation du resultat
                         $membre=$stmt->fetch(PDO::FETCH_ASSOC);
-                        //recuperation des donnés du membre
+                        //recuperation des données du membre
                         $id = $membre['id'];
-                        // $matricule = $membre['matricule'];
                         $nom = $membre['nom'];
                         $prenom = $membre['prenom'];
-                        $tranche_age = $membre['tranche_age'];
+                        $tranche_age = $membre['id_tranche_age'];
                         $sexe = $membre['sexe'];
                         $situation_matrimoniale = $membre['situation_matrimoniale'];
-                        $statut = $membre['statut'];
+                        $statut = $membre['id_statut'];
 
                     }else{
                         echo"Erreur lors de la recuperation des données";
@@ -85,9 +87,6 @@ if(isset($_POST['submit'])) {
             
             <label for="prenom">Prénom :</label>
             <input type="text" name="prenom" id="prenom" value="<?php echo $prenom?>"  required><br>
-            
-            <label for="tranche_age">Tranche d'âge :</label>
-            <input type="number" name="tranche_age" id="tranche_age" value="<?php echo $tranche_age?>"  required><br>
             
             <div class="les-options">
                 <div class="options">
@@ -106,16 +105,38 @@ if(isset($_POST['submit'])) {
                         <option value="Veuf(ve)"  <?php if($situation_matrimoniale == "Veuf(ve)"){ echo "selected";}?>>Veuf(ve)</option>
                     </select><br>
                 </div>        
-                <div class="options">
-                    <label for="statut">Statut :</label>
-                    <select name="statut" id="statut" required>
-                        <option value="Chef de quartier" <?php if($statut == "Chef de quartier"){ echo "selected";}?>>Chef de quartier</option>
-                        <option value="Civile" <?php if($statut == "Civile"){ echo "selected";}?>>Civile</option>
-                        <option value="Badianou Ngokh" <?php if($statut == "Badianou Ngokh"){ echo "selected";}?>>Badianou Ngokh</option>
-                        <!-- Ajoutez d'autres options si nécessaire -->
-                    </select><br>
-                </div>
-            </div>        
+            </div>  
+            </select><br>  
+         <label for="tranche_age">Tranche d'âge :</label><br>
+            <select name="tranche_age" id="tranche_age" required>
+            <option value="">Sélectionnez la tranche d'âge</option>
+        <?php
+        // Script pour récupérer les données de la table tranche_age
+            $sql_tranche_age = "SELECT id, libelle_tranche_age FROM tranche_age";
+            $stmt_tranche_age = $connexion->query($sql_tranche_age);
+            $liste_tranche_age = $stmt_tranche_age->fetchAll(PDO::FETCH_ASSOC);
+            //générer les options à partir des données de la table tranche_age
+            foreach ($liste_tranche_age as $tranche_age) {
+            echo "<option value=\"{$tranche_age['id']}\">{$tranche_age['libelle_tranche_age']}</option>";
+            }
+        ?>
+        </select><br> 
+
+    <label for="statut">Statut :</label><br>
+        <select name="statut" id="statut" required>
+            <option value="">Sélectionnez le statut</option>
+        <?php
+        // Script pour récupérer les données de la table statut
+        $sql_statut = "SELECT id, libelle_statut FROM statut";
+        $stmt_statut = $connexion->query($sql_statut);
+        $liste_statut = $stmt_statut->fetchAll(PDO::FETCH_ASSOC);
+        //générer les options à partir des données de la table statut 
+        foreach ($liste_statut as $statut) {
+            echo "<option value=\"{$statut['id']}\">{$statut['libelle_statut']}</option>";
+        }
+        ?>
+    </select><br>    
+
             <input type="submit" name="submit" value="Modifier le membre">
         </form>
     </section>
