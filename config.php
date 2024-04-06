@@ -10,7 +10,7 @@ define('DB_NAME','Patte_Doie');
 //Connexion à la base de donnée en utilisant PDO
 try{
     $connexion = new PDO("mysql:host=".DB_SERVEUR.";dbname=".DB_NAME,DB_USERNAME,DB_PASSWORD);
-    $membre = new Membres($connexion, 99, "Sarr","Fatou", 25, "Féminin", "Marié", "Civile");
+    $membre = new Membres($connexion, 99, "Sarr","Fatou", "18-25 ans", "Féminin", "Marié", "Civile");
     //Appel de la méthode d'affichage
     $resultats= $membre->readMembres();
 
